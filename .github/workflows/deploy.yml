@@ -1,0 +1,43 @@
+name: Deploy Rust Wasm to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+
+      - name: Download Trunk
+        uses: jetli/trunk-action@v0.4.0
+        with:
+          version: 'latest'
+
+      - name: Build with Trunk
+        # สำคัญ! เปลี่ยน /ชื่อ-repo-ของคุณ/ ให้ตรงกับชื่อ repo ใน GitHub
+        # เช่นถ้า repo ชื่อ rust-blog-demo ก็ใส่ --public-url /rust-blog-demo/
+        run: trunk build --release --public-url /rust-blog
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
