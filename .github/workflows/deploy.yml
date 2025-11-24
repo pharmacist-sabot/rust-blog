@@ -31,7 +31,7 @@ jobs:
           version: 'latest'
 
       - name: Build with Trunk
-        # *** อย่าลืมเปลี่ยน /ชื่อ-repo-ของคุณ/ ให้ตรงกับชื่อ repository จริงๆ นะครับ ***
+        # *** อย่าลืมเปลี่ยน /ชื่อ-repo-ของคุณ/ ให้ตรงกับชื่อ repository จริงๆ ***
         # ตัวอย่าง: ถ้า repo ชื่อ "rust-blog-demo" บรรทัดนี้จะเป็น:
         # run: trunk build --release --public-url /rust-blog-demo/
         run: trunk build --release --public-url /rust-blog/
@@ -43,4 +43,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 # 🔥 แก้ตรงนี้: อัปเดตจาก v2 เป็น v4
+        uses: actions/deploy-pages@v4 
